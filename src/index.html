@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./style/main.css">
+    <!-- <link rel="stylesheet" href="./style/printForm.css"> -->
+    
     <script defer src="./logic/main.js"></script>
 
     <title>PFConstructor</title>
@@ -14,7 +16,7 @@
 <body>
     <div id="main">
         <div id="pfBlock">
-            <div id="pageBlock">
+            <div id="pageBlockContainer">
                 <input type="file" name="printForm" id="inputFile">
             </div>
         </div>
@@ -23,8 +25,14 @@
             <button id="addTableButton">Добавить таблицу</button>
             <button id="deteleTableButton">Удалить таблицу</button>
             <button id="saveFileButton">Сохранить файл</button>
+
+            <div>
+                <textarea name="styleText" id="styleText" rows="15"></textarea>
+                <button id="saveStileButton">Применить стиль</button>
+            </div>
+            
         </div>
-    </div> 
+    </div>
 </body>
 
 </html>

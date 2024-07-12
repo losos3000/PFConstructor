@@ -18,7 +18,10 @@ body, html {
     
     width: 60%;
     height: 100%;
-    padding: 25px 50px;
+    /* padding: 25px 50px; */
+
+    display: flex;
+    justify-content: center;
 }
 
 #toolBlock {
@@ -27,18 +30,8 @@ body, html {
     padding: 25px;
 }
 
-#pageBlock {
+#pageBlockContainer {
     background-color: white;
 
-    width: 700*0.3%;
-    height: 500px;
-    padding: 25px;
-}
-
-table {
-    width: 100%;
-}
-
-td {
-    border: 1px solid black;
+    width: 700px;
 }

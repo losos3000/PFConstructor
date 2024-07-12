@@ -1,0 +1,13 @@
+#pageBlock > table {
+    width: 100%;
+}
+
+#pageBlock > td {
+    border: 1px solid black;
+}
+
+#pageBlock {
+    width: 700px;
+    padding: 25px;
+}
+
