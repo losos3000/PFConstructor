@@ -24,14 +24,29 @@ body, html {
     justify-content: center;
 }
 
-#toolBlock {
+#toolsBlock {
     width: 40%;
     height: 100%;
     padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    
 }
 
 #pageBlockContainer {
     background-color: white;
 
     width: 700px;
+}
+
+#toolsFile,
+#toolsForm,
+#toolsFormEdit {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
 }

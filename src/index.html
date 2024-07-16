@@ -2,35 +2,43 @@
 <html lang="ru">
 
 <head>
+    <title>PFConstructor</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./style/main.css">
     <!-- <link rel="stylesheet" href="./style/printForm.css"> -->
     
-    <script defer src="./logic/main.js"></script>
-
-    <title>PFConstructor</title>
+    <script src="./logic/main.js"></script>
 </head>
 
 <body>
     <div id="main">
         <div id="pfBlock">
             <div id="pageBlockContainer">
-                <input type="file" name="printForm" id="inputFile">
             </div>
         </div>
             
-        <div id="toolBlock">
-            <button id="addTableButton">Добавить таблицу</button>
-            <button id="deteleTableButton">Удалить таблицу</button>
-            <button id="saveFileButton">Сохранить файл</button>
-
-            <div>
-                <textarea name="styleText" id="styleText" rows="15"></textarea>
-                <button id="saveStileButton">Применить стиль</button>
+        <div id="toolsBlock">
+            <div id="toolsFile">
+                <input type="file" accept=".html" id="inputFile">
+                <button id="saveFileButton">Сохранить файл</button>
             </div>
-            
+
+            <br/>
+
+            <div id="toolsForm">
+                <button id="clearFormButton">Очистить форму</button>
+                <button id="renderFormButton">Обновить форму</button>
+            </div>
+
+            <br/>
+
+            <div id="toolsFormEdit">
+                <button id="addTableButton">Добавить таблицу</button>
+                <button id="deteleTableButton">Удалить таблицу</button>
+            </div>         
         </div>
     </div>
 </body>
