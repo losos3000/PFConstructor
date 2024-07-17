@@ -7,17 +7,22 @@ class PrintForm {
             `\n` +
             `   table {\n` +
             `       width: 100%;\n` +
+            `       border-collapse: collapse;\n` +
             `   }\n`+
             `\n`+
             `   td {\n` +
             `       border: 1px solid black;\n` +
+            `       padding: 5px;\n` +
             `   }\n` +
             `\n` +
             `   #pageBlock {\n` +
             `       box-sizing: border-box;\n` +
             `       width: 700px;\n` +
             `       padding: 25px;\n` +
-            `       background-color: red;\n` +
+            `   }\n` +
+            `\n` +
+            `   .tableText td {\n` +
+            `       border: 0px;\n` +
             `   }\n`
         );
 
@@ -49,6 +54,9 @@ class EditTools {
 
         //Кнопка удаления таблицы
         this.deteleTableButton = document.querySelector('#deteleTableButton');
+
+        //
+        this.showUICheckbox = document.querySelector('#showUICheckbox');
     }
 
 
@@ -74,10 +82,52 @@ class SystemTools {
 
 
     //Обновление блока страницы
-    renderForm () {
-        pageBlockContainer.innerHTML = editTools.getPrintFormCode();
-        // log('Print Form:\n' + editTools.getPrintFormCode(), 'TEST');
+    renderForm() {
+        if (editTools.showUICheckbox.checked) {
+            this.renderFormUI();
+        } else {
+            this.pageBlockContainer.innerHTML = editTools.getPrintFormCode();
+        }
     };
+
+    
+    //
+    renderFormUI() {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'UIAddBlock');
+        div.setAttribute('ui-index', '-1');
+
+        let buttonTable = document.createElement('button');
+        buttonTable.innerText = 'Добавить таблицу';
+        buttonTable.setAttribute('class', 'UIAddTable');
+        buttonTable.setAttribute('onclick', 'UIAddTable(event.target.parentElement.getAttribute("ui-index"))');
+
+        let buttonText = document.createElement('button');
+        buttonText.innerText = 'Добавить текст';
+        buttonText.setAttribute('class', 'UIAddText');
+        buttonText.setAttribute('onclick', 'UIAddText(event.target.parentElement.getAttribute("ui-index"))');
+
+        div.append(buttonTable.cloneNode(true));
+        div.append(buttonText.cloneNode(true));
+
+        let printFormUI = document.createElement('div');
+        printFormUI.setAttribute('id', 'pageBlock');
+
+        printFormUI.appendChild(printForm.style.cloneNode(true));
+        printFormUI.appendChild(div.cloneNode(true));
+
+        for (let i = 0; i < printForm.body.children.length; i++) {
+            let pfChildren = printForm.body.children[i].cloneNode(true);
+            pfChildren.setAttribute('onmouseover', 'UIMouseOverOut(event)');
+            pfChildren.setAttribute('onmouseout', 'UIMouseOverOut(event)')
+            
+            printFormUI.appendChild(pfChildren);
+            div.setAttribute('ui-index', `${i}`);
+            printFormUI.appendChild(div.cloneNode(true));
+        }
+
+        this.pageBlockContainer.innerHTML = printFormUI.outerHTML;
+    }
 
 
     //Парсинг printForm.css в текст

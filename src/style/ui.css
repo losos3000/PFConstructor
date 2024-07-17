@@ -1,0 +1,55 @@
+.UIAddBlock {
+    width: 100%;
+    height: 10px;
+    
+    display: flex;
+    content-visibility: hidden;
+    box-sizing: border-box;
+
+    padding: 0px 10px;
+    margin: 5px 0;
+    gap: 10px;
+
+    border: 1px dashed rgb(190, 220, 255);
+    border-radius: 20px;
+
+    transition: all 0.2s;
+}
+
+.UIAddBlock:hover {
+    height: auto;
+    content-visibility: visible;
+    padding: 10px;
+}
+
+
+.UIAddBlock > button {
+    border: 1px dashed rgb(190, 220, 255);
+    border-radius: 10px;
+    flex: 1;
+    color: rgb(190, 220, 255);
+    background-color: white;
+    padding: 5px;
+}
+
+.UIAddBlock > button:hover {
+    background-color: rgb(238, 246, 255);
+    cursor: pointer;
+}
+
+.UIAddBlock > button:active {
+    background-color: rgb(216, 234, 255);
+    cursor: pointer;
+}
+
+.UIAddTable {
+    
+}
+
+.UIAddText {
+    
+}
+
+.is_hover {
+    outline: 2px solid red;
+}

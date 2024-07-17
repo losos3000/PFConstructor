@@ -1,7 +1,8 @@
 //ОБРАБОТКА СОБЫТИЙ
 //рендер формы при загрузке страницы
 window.onload = () => {
-    systemTools.renderForm();
+    // systemTools.renderForm();
+    systemTools.renderFormUI();
 };
 
 
@@ -78,4 +79,85 @@ editTools.deteleTableButton.addEventListener('click', () => {
         systemTools.renderForm();
     }
 });
+
+
+//
+editTools.showUICheckbox.addEventListener('click', () => {
+    systemTools.renderForm();
+});
 //==========
+
+document.querySelector('#testButton').addEventListener('click', () => {
+    log(document.querySelector('#pageBlock'));
+});
+
+
+//
+const UIAddTable = (index) => {
+    let table = document.createElement('table');
+    table.innerHTML = (`
+        <tbody>
+            <tr>
+                <td>
+                    ${printForm.body.children.length + 1}
+                </td>
+            </tr>
+        </tbody>
+    `);
+
+    if (index == -1){
+        printForm.body.prepend(table.cloneNode(true));
+    } else {
+        printForm.body.children[index].after(table.cloneNode(true));
+    }
+
+    systemTools.renderForm();
+}
+
+
+//
+const UIAddText = (index) => {
+    let table = document.createElement('table');
+    // table.setAttribute('class', 'tableText');
+    table.classList.add('tableText');
+    table.innerHTML = (`
+        <tbody>
+            <tr>
+                <td>
+                    Текст текст текст
+                </td>
+            </tr>
+        </tbody>
+    `);
+
+    if (index == -1){
+        printForm.body.prepend(table.cloneNode(true));
+    } else {
+        printForm.body.children[index].after(table.cloneNode(true));
+    }
+
+    systemTools.renderForm();
+}
+
+
+//
+const UIMouseOverOut = (event) => {
+    // if (!isOutside(event, this))
+    //     return;
+
+    // let button = document.createElement('button');
+    // button.setAttribute('class', 'UIElement');
+    // button.setAttribute('onclick', 'log("hello")');
+    // button.innerText = 'X';
+    
+
+    if (event.type == 'mouseout') {
+        // event.currentTarget.querySelectorAll('.UIElement').forEach(el => {
+        //     el.remove();
+        // })
+        event.currentTarget.classList.remove('is_hover')
+    } else {
+        event.currentTarget.classList.add('is_hover');
+        // event.currentTarget.prepend(button);
+    }
+}
