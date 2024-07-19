@@ -80,9 +80,28 @@ class SystemTools {
         this.pageBlockContainer = document.getElementById('pageBlockContainer');
     }
 
+    
+    //
+    setCache() {
+        window.localStorage.setItem('printFormBody', printForm.body.innerHTML);
+        window.localStorage.setItem('printFormStyle', printForm.style);
+    }
+
+
+    //
+    getChache() {
+        let pfsCache = window.localStorage.getItem('printFormBody');
+        let pfbCache = window.localStorage.getItem('printFormStyle');
+
+        printForm.style = pfsCache??printForm.style;
+        printForm.body.innerHTML = pfbCache??printForm.body.innerHTML;
+    }
+
 
     //Обновление блока страницы
     renderForm() {
+        this.setCache();
+
         if (editTools.showUICheckbox.checked) {
             this.renderFormUI();
         } else {

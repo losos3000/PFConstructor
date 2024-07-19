@@ -1,6 +1,7 @@
 //ОБРАБОТКА СОБЫТИЙ
 //рендер формы при загрузке страницы
 window.onload = () => {
+    // systemTools.getChache();
     // systemTools.renderForm();
     systemTools.renderFormUI();
 };
@@ -88,7 +89,11 @@ editTools.showUICheckbox.addEventListener('click', () => {
 //==========
 
 document.querySelector('#testButton').addEventListener('click', () => {
-    log(document.querySelector('#pageBlock'));
+    dbg(document.querySelector('#pageBlock'));
+    window.localStorage.setItem('test', 'testdata');
+    dbg(window.localStorage.getItem('test'));
+    window.localStorage.removeItem('test');
+    dbg(window.localStorage.getItem('test'));
 });
 
 
