@@ -1,3 +1,4 @@
+/* MAIN */
 body, html {
     margin: 0;
     
@@ -5,6 +6,10 @@ body, html {
     height: 100%;
 }
 
+button {
+    flex: 1;
+    min-width: fit-content;
+}
 
 #main {
     width: 100%;
@@ -12,41 +17,49 @@ body, html {
 
     display: flex;
 }
+/* ========== */
 
+
+/* PRINT FORM BLOCK */
 #pfBlock {
     background-color: rgb(197, 197, 197);
     
     width: 60%;
-    height: 100%;
-    /* padding: 25px 50px; */
+    padding: 25px 0px;
 
     display: flex;
     justify-content: center;
-}
 
-#toolsBlock {
-    width: 40%;
-    height: 100%;
-    padding: 25px;
-
-    display: flex;
-    flex-direction: column;
-    
+    overflow-y: scroll;
 }
 
 #pageBlockContainer {
     background-color: white;
 
     width: 700px;
+    min-height: 100%;
+    height:min-content;
+}
+/* ========== */
+
+
+
+/* TOOLS BLOCK */
+#toolsBlock {
+    width: 40%;
+
+    padding: 25px;
+    gap: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
 }
 
-#toolsFile,
-#toolsForm,
-#toolsFormEdit {
+#toolsBlock > div {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
-
-button {
-    flex: 1;
-}
+/* ========== */

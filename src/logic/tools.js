@@ -2,7 +2,12 @@
 //Класс печатной формы
 class PrintForm {
     constructor() {
+        //Инициализация свойств
         this.style = document.createElement('style');
+        this.body = document.createElement('div');
+        this.name = 'printForm';
+
+        //Инициализация стилей
         this.style.innerHTML = (
             `\n` +
             `   table {\n` +
@@ -13,6 +18,7 @@ class PrintForm {
             `   td {\n` +
             `       border: 1px solid black;\n` +
             `       padding: 5px;\n` +
+            // `       column-span: auto;\n` +
             `   }\n` +
             `\n` +
             `   #pageBlock {\n` +
@@ -26,7 +32,7 @@ class PrintForm {
             `   }\n`
         );
 
-        this.body = document.createElement('div');
+        //Инициализация формы
         this.body.setAttribute('id', 'pageBlock');
         this.body.innerHTML = '\n   ';
     }
@@ -55,8 +61,17 @@ class EditTools {
         //Кнопка удаления таблицы
         this.deteleTableButton = document.querySelector('#deteleTableButton');
 
-        //
+        //UI чекбокс
         this.showUICheckbox = document.querySelector('#showUICheckbox');
+
+        //Кнопка обновления кеша
+        this.setCacheButton = document.querySelector('#setCacheButton');
+
+        //Кнопка удаления кеша
+        this.removeCacheButton = document.querySelector('#removeCacheButton');
+
+        //Тестовая кнопка
+        this.testButton = document.querySelector('#testButton');
     }
 
 
@@ -76,31 +91,49 @@ class EditTools {
 //Класс системных инструментов
 class SystemTools {
     constructor() {
+        //
+        this.pfBlock = document.getElementById('pfBlock');
+
         //Системный контейнер печаной формы
         this.pageBlockContainer = document.getElementById('pageBlockContainer');
+
+        //
+        this.pageBlock = document.getElementById('pageBlock');
     }
 
     
     //
     setCache() {
+        // window.localStorage.setItem('printFormStyle', String(printForm.style.innerHTML));
         window.localStorage.setItem('printFormBody', printForm.body.innerHTML);
-        window.localStorage.setItem('printFormStyle', printForm.style);
     }
 
 
     //
     getChache() {
-        let pfsCache = window.localStorage.getItem('printFormBody');
-        let pfbCache = window.localStorage.getItem('printFormStyle');
+        // let pfsCache = window.localStorage.getItem('printFormStyle');
+        let pfbCache = window.localStorage.getItem('printFormBody');
 
-        printForm.style = pfsCache??printForm.style;
-        printForm.body.innerHTML = pfbCache??printForm.body.innerHTML;
+        // printForm.style.innerText = pfsCache??printForm.style;
+        printForm.body.innerHTML = pfbCache??printForm.body;
+    }
+
+    
+
+    //
+    removeCahce() {
+        window.localStorage.clear();
+        this.renderForm(false);
     }
 
 
     //Обновление блока страницы
-    renderForm() {
-        this.setCache();
+    renderForm(doSetCache) {
+        doSetCache = doSetCache??true;
+
+        if (doSetCache){
+            this.setCache();
+        }
 
         if (editTools.showUICheckbox.checked) {
             this.renderFormUI();
@@ -113,32 +146,53 @@ class SystemTools {
     //
     renderFormUI() {
         let div = document.createElement('div');
-        div.setAttribute('class', 'UIAddBlock');
+        div.classList.add('UI');
+        div.classList.add('UIAddBlock');
         div.setAttribute('ui-index', '-1');
 
+
         let buttonTable = document.createElement('button');
+        buttonTable.classList.add('UI');
         buttonTable.innerText = 'Добавить таблицу';
         buttonTable.setAttribute('class', 'UIAddTable');
         buttonTable.setAttribute('onclick', 'UIAddTable(event.target.parentElement.getAttribute("ui-index"))');
 
+
         let buttonText = document.createElement('button');
+        buttonText.classList.add('UI');
         buttonText.innerText = 'Добавить текст';
         buttonText.setAttribute('class', 'UIAddText');
         buttonText.setAttribute('onclick', 'UIAddText(event.target.parentElement.getAttribute("ui-index"))');
 
+
         div.append(buttonTable.cloneNode(true));
         div.append(buttonText.cloneNode(true));
 
+
         let printFormUI = document.createElement('div');
         printFormUI.setAttribute('id', 'pageBlock');
+        
 
-        printFormUI.appendChild(printForm.style.cloneNode(true));
+        let style = document.createElement('style');
+        style.innerHTML = printForm.style.innerHTML;
+        style.innerHTML += (
+`       table {
+            border: 1px dashed black;
+            padding: 10px;
+            border-collapse: separate;
+        }
+        
+        .tableText {
+            border-style: dashed;
+        }`);
+        printFormUI.appendChild(style.cloneNode(true));
+
+
+
         printFormUI.appendChild(div.cloneNode(true));
 
         for (let i = 0; i < printForm.body.children.length; i++) {
             let pfChildren = printForm.body.children[i].cloneNode(true);
-            pfChildren.setAttribute('onmouseover', 'UIMouseOverOut(event)');
-            pfChildren.setAttribute('onmouseout', 'UIMouseOverOut(event)')
             
             printFormUI.appendChild(pfChildren);
             div.setAttribute('ui-index', `${i}`);
@@ -183,6 +237,26 @@ class SystemTools {
         }
         
         return (div.innerHTML);
+    }
+
+
+    //
+    resetPrintForm() {
+        if (editTools.showUICheckbox.checked){
+            let pageBlock = document.querySelector('#pageBlock');
+
+            pageBlock.querySelectorAll('style').forEach((el) => {
+                el.remove();
+            });
+
+            pageBlock.querySelectorAll('.UI').forEach((el) => {
+                el.remove();
+            });
+
+            printForm.body.innerHTML = pageBlock.innerHTML;
+        }
+
+        this.renderForm();
     }
 };
 //==========

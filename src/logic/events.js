@@ -1,7 +1,7 @@
 //ОБРАБОТКА СОБЫТИЙ
 //рендер формы при загрузке страницы
 window.onload = () => {
-    // systemTools.getChache();
+    systemTools.getChache();
     // systemTools.renderForm();
     systemTools.renderFormUI();
 };
@@ -22,24 +22,50 @@ editTools.inputFile.addEventListener('change', (event) => {
 });
 
 
-//Добавление таблицы
-editTools.addTableButton.addEventListener('click', () => {
+//Обработка нажатия на элемент
+systemTools.pfBlock.addEventListener('click', (event) => {
+    if (event.type == 'click'
+        && event.target.id != ('pfBlock')
+        && event.target.id != ('pageBlockContainer')
+        && event.target.id != ('pageBlock')
+        && !event.target.classList.contains('UI')
+    ) {
+
+        if (event.target.classList.contains('is_active')){
+            event.target.classList.remove('is_active');
+        }
+        else{
+            systemTools.pageBlockContainer.querySelectorAll('.is_active').forEach((el) => {
+                el.classList.remove('is_active');
+            });
+
+            event.target.classList.add('is_active');
+        }
+
+    } else {
+
+        systemTools.pageBlockContainer.querySelectorAll('.is_active').forEach((el) => {
+            el.classList.remove('is_active');
+        });
+
+    }
+});
 
 
-    let table = document.createElement('table');
-    table.innerHTML = (`
-        <tbody>
-            <tr>
-                <td>
-                    ${printForm.body.children.length + 1}
-                </td>
-            </tr>
-        </tbody>
-    `);
+//Обработка наведения на элемент
+systemTools.pageBlockContainer.addEventListener('mouseover', (event) => {
+    if (event.target.id != ('pageBlockContainer')
+        && event.target.id != ('pageBlock')
+        && !event.target.classList.contains('UI')
+    ) {
+        event.target.classList.add('is_hover')
+    }
+});
 
-    printForm.body.append(table)
-    printForm.body.append('\n   ');
-    systemTools.renderForm();
+
+//Обработка уведения курсора с элемента
+systemTools.pageBlockContainer.addEventListener('mouseout', (event) => {
+    event.target.classList.remove('is_hover')
 });
 
 
@@ -73,96 +99,55 @@ editTools.clearFormButton.addEventListener('click', () => {
 });
 
 
-//Удаление последней таблицы
+//Удаление элемента
 editTools.deteleTableButton.addEventListener('click', () => {
-    if (printForm.body.childElementCount > 0){
-        printForm.body.children[printForm.body.childElementCount - 1].remove();
-        systemTools.renderForm();
+    let activeElement = systemTools.pageBlockContainer.querySelector('.is_active');
+
+    if (activeElement){
+        systemTools.pageBlockContainer.querySelector('.is_active').remove();
     }
+
+    systemTools.resetPrintForm();
 });
 
 
-//
+//Отображение UI элементов на форме
 editTools.showUICheckbox.addEventListener('click', () => {
     systemTools.renderForm();
 });
-//==========
 
-document.querySelector('#testButton').addEventListener('click', () => {
-    dbg(document.querySelector('#pageBlock'));
-    window.localStorage.setItem('test', 'testdata');
-    dbg(window.localStorage.getItem('test'));
-    window.localStorage.removeItem('test');
-    dbg(window.localStorage.getItem('test'));
+
+//Обновление кеша
+editTools.setCacheButton.addEventListener('click', () => {
+    systemTools.setCache();
 });
 
 
-//
-const UIAddTable = (index) => {
-    let table = document.createElement('table');
-    table.innerHTML = (`
-        <tbody>
-            <tr>
-                <td>
-                    ${printForm.body.children.length + 1}
-                </td>
-            </tr>
-        </tbody>
-    `);
-
-    if (index == -1){
-        printForm.body.prepend(table.cloneNode(true));
-    } else {
-        printForm.body.children[index].after(table.cloneNode(true));
-    }
-
-    systemTools.renderForm();
-}
+//Удаление кеша
+editTools.removeCacheButton.addEventListener('click', () => {
+    systemTools.removeCahce();
+});
 
 
-//
-const UIAddText = (index) => {
-    let table = document.createElement('table');
-    // table.setAttribute('class', 'tableText');
-    table.classList.add('tableText');
-    table.innerHTML = (`
-        <tbody>
-            <tr>
-                <td>
-                    Текст текст текст
-                </td>
-            </tr>
-        </tbody>
-    `);
-
-    if (index == -1){
-        printForm.body.prepend(table.cloneNode(true));
-    } else {
-        printForm.body.children[index].after(table.cloneNode(true));
-    }
-
-    systemTools.renderForm();
-}
+//Обработка наведения курсора
+// const UIMouseOverOut = (event) => {
+//     if (event.type == 'mouseover'
+//         && event.target.id != ('pageBlock')
+//         && !event.target.classList.contains('UI')
+//     ) {
+//         event.target.classList.add('is_hover')
+//     } else {
+//         event.target.classList.remove('is_hover');
+//     }
+// }
+//==========
 
 
-//
-const UIMouseOverOut = (event) => {
-    // if (!isOutside(event, this))
-    //     return;
 
-    // let button = document.createElement('button');
-    // button.setAttribute('class', 'UIElement');
-    // button.setAttribute('onclick', 'log("hello")');
-    // button.innerText = 'X';
-    
+//Тестовая кнопка
+editTools.testButton.addEventListener('click', () => {
+    // window.localStorage.setItem('test', printForm.style.innerHTML);
 
-    if (event.type == 'mouseout') {
-        // event.currentTarget.querySelectorAll('.UIElement').forEach(el => {
-        //     el.remove();
-        // })
-        event.currentTarget.classList.remove('is_hover')
-    } else {
-        event.currentTarget.classList.add('is_hover');
-        // event.currentTarget.prepend(button);
-    }
-}
+    // dbg(window.localStorage.getItem('test'));
+    systemTools.removeCahce();
+});

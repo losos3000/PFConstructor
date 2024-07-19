@@ -50,6 +50,9 @@
     
 }
 
-.is_hover {
-    outline: 2px solid red;
+.is_hover,
+.is_active {
+    border-color: red;
+    border-width: 2px;
+    border-style: solid;
 }

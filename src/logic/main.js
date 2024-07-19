@@ -2,6 +2,7 @@
 const jsModules = [
     'tools',
     'events',
+    'editForm',
     // 'test',
 ];
 //==========
