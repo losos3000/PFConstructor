@@ -1,3 +1,30 @@
+/* VARIABLES */
+:root {
+    --grey1-color: rgb(120, 120, 120);
+    --grey2-color: rgb(160, 160, 160);
+    --grey3-color: rgb(180, 180, 180);
+    --grey4-color: rgb(200, 200, 200);
+    --grey5-color: rgb(220, 220, 220);
+    --grey6-color: rgb(240, 240, 240);
+    --grey7-color: rgb(250, 250, 250);
+    
+    --main-color: rgb(90, 150, 255);
+    --light-main-color: rgb(190, 220, 255);
+    --el-active-color: rgb(216, 234, 255);
+    --el-hover-color: rgb(238, 246, 255);
+    --el-bg-color: rgb(250, 252, 255);
+
+    --bg-color: var(--grey4-color);
+    --page-color: white;
+
+    --btn-radius: 10px;
+    --btn-container-padding: 10px;
+    --btn-container-radius: 20px;
+  }
+/* ========== */
+
+
+
 /* MAIN */
 body, html {
     margin: 0;
@@ -8,7 +35,35 @@ body, html {
 
 button {
     flex: 1;
-    min-width: fit-content;
+    min-width: /*fit-content*/ 30%;
+
+    padding: 5px;
+
+    color: var(--main-color);
+    background-color: var(--el-bg-color);
+
+    cursor: pointer;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--main-color);
+    border-radius: var(--btn-radius);
+}
+
+button:hover {
+    background-color: var(--el-hover-color);
+}
+
+button:active {
+    background-color: var(--el-active-color);
+}
+
+button:disabled,
+button[disabled]{
+    border-color: var(--grey5-color) !important;
+    color: var(--grey5-color) !important;
+    background-color: var(--grey7-color) !important;
+    cursor: default;
 }
 
 #main {
@@ -17,49 +72,19 @@ button {
 
     display: flex;
 }
-/* ========== */
 
-
-/* PRINT FORM BLOCK */
-#pfBlock {
-    background-color: rgb(197, 197, 197);
+.buttonContainer {
+    border: 1px dashed rgb(190, 220, 255);
     
-    width: 60%;
-    padding: 25px 0px;
-
-    display: flex;
-    justify-content: center;
-
-    overflow-y: scroll;
-}
-
-#pageBlockContainer {
-    background-color: white;
-
-    width: 700px;
-    min-height: 100%;
-    height:min-content;
+    border-radius: var(--btn-container-radius);
+    padding: var(--btn-container-padding);
 }
 /* ========== */
 
-
-
-/* TOOLS BLOCK */
-#toolsBlock {
-    width: 40%;
-
-    padding: 25px;
-    gap: 20px;
-
-    display: flex;
-    flex-direction: column;
-
-    overflow-y: scroll;
+table {
+    table-layout: fixed !important;
 }
 
-#toolsBlock > div {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+td {
+    width: 100% !important;
 }
-/* ========== */

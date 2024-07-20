@@ -1,3 +1,4 @@
+dbg('tools.js start');
 //КЛАССЫ СИСТЕМНЫХ ФУНКЦИЙ И ИНСТРУМЕНТОВ
 //Класс печатной формы
 class PrintForm {
@@ -13,6 +14,7 @@ class PrintForm {
             `   table {\n` +
             `       width: 100%;\n` +
             `       border-collapse: collapse;\n` +
+            `       table-layout: fixed;\n` +
             `   }\n`+
             `\n`+
             `   td {\n` +
@@ -43,35 +45,95 @@ class PrintForm {
 //Класс инструментов работы с формой
 class EditTools {
     constructor() {
-        //Поле загрузки файла
-        this.inputFile = document.querySelector('#inputFile');
+        //РАБОТА С ФАЙЛАМИ
+        //Кнопка загрузки файла
+        this.uploadFileButton = document.querySelector('#uploadFileButton');
+
+        //Элемент закгрузки файла
+        this.input = document.createElement('input');
+        this.input.type = 'file';
+        this.input.accept = '.html';
 
         //Кнопка сохранения файла
         this.saveFileButton = document.querySelector('#saveFileButton');
+        //==========
 
-        //Кнопка очищения формы
-        this.clearFormButton = document.querySelector('#clearFormButton');
 
-        //Кнопка обнвления формы
-        this.renderFormButton = document.querySelector('#renderFormButton');
 
-        //Кнопка добавления таблицы
-        this.addTableButton = document.querySelector('#addTableButton');
-
-        //Кнопка удаления таблицы
-        this.deteleTableButton = document.querySelector('#deteleTableButton');
-
-        //UI чекбокс
-        this.showUICheckbox = document.querySelector('#showUICheckbox');
-
+        //РАБОТА С КЕШОМ
         //Кнопка обновления кеша
         this.setCacheButton = document.querySelector('#setCacheButton');
 
         //Кнопка удаления кеша
         this.removeCacheButton = document.querySelector('#removeCacheButton');
+        //==========
 
+
+        //РАБОТА С ФОРМОЙ
+        //UI чекбокс
+        this.showUICheckbox = document.querySelector('#showUICheckbox');
+
+        //Кнопка очищения формы
+        this.clearFormButton = document.querySelector('#clearFormButton');
+
+        //Кнопка обновления формы
+        this.renderFormButton = document.querySelector('#renderFormButton');
+        //==========
+
+
+
+        //РАБОТА С ТАБЛИЦЕЙ
+        //Кнопка добавления ячейки слева
+        this.cellAdLButton = document.querySelector('#cellAdLButton');
+
+        //Кнопка добавления ячейки справа
+        this.cellAddRButton = document.querySelector('#cellAddRButton');
+
+        //Кнопка удаления ячейки
+        this.cellDelButton = document.querySelector('#cellDelButton');
+
+        //Кнопка добавления столбца слева
+
+
+        //Кнопка добавления столбца справа
+
+
+        //Кнопка удаления столбца
+
+
+        //Кнопка добавления строки сверху
+
+
+        //Кнопка добавления строки снизу
+
+
+        //Кнопка удаления строки
+
+
+        //Кнопка добавления таблицы (по умолчанию с низу)
+        this.tableAddDButton = document.querySelector('#tableAddDButton');
+
+        //Кнопка удаления таблицы
+
+        //==========
+        
+        
+        //РАБОТА С ТЕКСТОМ
+        //Кнопка добавления текста
+        // this.addTextButton = document.createElement('button');
+        // this.addTextButton.classList.id = 'addTextButton';
+        //==========
+        
+        
+        //ПРОЧЕЕ
         //Тестовая кнопка
         this.testButton = document.querySelector('#testButton');
+    }
+
+    
+    //
+    renderTools() {
+
     }
 
 
@@ -104,6 +166,8 @@ class SystemTools {
     
     //
     setCache() {
+        //Сделать так, что запись в кеш чистилась от hover и active
+
         // window.localStorage.setItem('printFormStyle', String(printForm.style.innerHTML));
         window.localStorage.setItem('printFormBody', printForm.body.innerHTML);
     }
@@ -127,9 +191,18 @@ class SystemTools {
     }
 
 
+    //
+    renderWorkspace() {
+        this.renderForm();
+        editTools.renderTools();
+    }
+    
+
     //Обновление блока страницы
     renderForm(doSetCache) {
         doSetCache = doSetCache??true;
+
+        this.resetPrintForm();
 
         if (doSetCache){
             this.setCache();
@@ -150,23 +223,26 @@ class SystemTools {
         div.classList.add('UIAddBlock');
         div.setAttribute('ui-index', '-1');
 
-
-        let buttonTable = document.createElement('button');
-        buttonTable.classList.add('UI');
-        buttonTable.innerText = 'Добавить таблицу';
-        buttonTable.setAttribute('class', 'UIAddTable');
-        buttonTable.setAttribute('onclick', 'UIAddTable(event.target.parentElement.getAttribute("ui-index"))');
-
-
-        let buttonText = document.createElement('button');
-        buttonText.classList.add('UI');
-        buttonText.innerText = 'Добавить текст';
-        buttonText.setAttribute('class', 'UIAddText');
-        buttonText.setAttribute('onclick', 'UIAddText(event.target.parentElement.getAttribute("ui-index"))');
+        let btnTable = document.createElement('button');
+        btnTable.classList.add('UI');
+        btnTable.innerText = '+⊞ Таблица';
+        btnTable.setAttribute('onclick', 'addTable(event.target.parentElement.getAttribute("ui-index"))');
+        
 
 
-        div.append(buttonTable.cloneNode(true));
-        div.append(buttonText.cloneNode(true));
+        
+
+        // let buttonBr = document.createElement('button');
+        // buttonBr.classList.add('UI');
+        // buttonBr.classList.add('UIAddBr');
+        // buttonBr.disabled = true;
+        // buttonBr.innerText = '+↲ Отступ';
+        // buttonBr.setAttribute('onclick', 'UIAddText(event.target.parentElement.getAttribute("ui-index"))');
+
+
+        div.append(btnTable.cloneNode(true));
+        // div.append(editTools.addTextButton.cloneNode(true));
+        // div.append(buttonBr.cloneNode(true));
 
 
         let printFormUI = document.createElement('div');
@@ -242,21 +318,20 @@ class SystemTools {
 
     //
     resetPrintForm() {
-        if (editTools.showUICheckbox.checked){
-            let pageBlock = document.querySelector('#pageBlock');
+        if (editTools.showUICheckbox.checked && this.pageBlockContainer.querySelector('#pageBlock')){
+            let pb = this.pageBlockContainer.querySelector('#pageBlock').cloneNode(true);
 
-            pageBlock.querySelectorAll('style').forEach((el) => {
+            if (pb)
+                pb.querySelectorAll('style').forEach((el) => {
+                    el.remove();
+                });
+
+            pb.querySelectorAll('.UI').forEach((el) => {
                 el.remove();
             });
 
-            pageBlock.querySelectorAll('.UI').forEach((el) => {
-                el.remove();
-            });
-
-            printForm.body.innerHTML = pageBlock.innerHTML;
+            printForm.body.innerHTML = pb.innerHTML;
         }
-
-        this.renderForm();
     }
 };
 //==========
@@ -273,3 +348,4 @@ var editTools = new EditTools();
 //Объект системных функций
 var systemTools = new SystemTools();
 //==========
+dbg('tools.js end');

@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./style/main.css">
-    <!-- <link rel="stylesheet" href="./style/printForm.css"> -->
-     <link rel="stylesheet" href="./style/ui.css">
+    <link rel="stylesheet" href="./style/pfBlock.css">
+    <link rel="stylesheet" href="./style/tools.css">
+    <link rel="stylesheet" href="./style/ui.css">
     
     <script src="./logic/main.js"></script>
 </head>
@@ -17,37 +18,59 @@
 <body>
     <div id="main">
         <div id="pfBlock">
+            <link rel="stylesheet" href="./style/printForm.css">
             <div id="pageBlockContainer">
+                
             </div>
         </div>
             
         <div id="toolsBlock">
-            <div id="toolsFile">
-                <input type="file" accept=".html" id="inputFile">
-                <button id="saveFileButton">Сохранить файл</button>
+            <div class="buttonContainer" id="toolsFile">
+                <button id="uploadFileButton">⩠ Загрузить файл</button>
+                <button id="saveFileButton">⩣ Сохранить файл</button>
             </div>
 
-            <div id="toolsForm">
-                <button id="clearFormButton">Очистить форму</button>
-                <button id="renderFormButton">Обновить форму</button>
+            <div class="buttonContainer" id="toolsSystem">
+                <button id="setCacheButton" disabled>⩣ Загрузить кеш</button>
+                <button id="setCacheButton">↻ Обновить кеш</button>
+                <button id="removeCacheButton">⨉ Очистить кеш</button>
             </div>
 
-            <div id="toolsFormEdit">
-                <button id="addTableButton">Добавить таблицу</button>
-                <button id="deteleTableButton">Удалить таблицу</button>
-            </div>
 
-            <div id="">
+            <div class="buttonContainer" id="toolsEditForm">
                 <input type="checkbox" id="showUICheckbox" checked>
                 <label for="showUICheckbox">UI элементы</label>
+
+                <button id="renderFormButton">↻ Обновить форму</button>
+                <button id="clearFormButton">⨉ Очистить форму</button>
             </div>
 
-            <div id="toolsCacheBlock">
-                <button id="setCacheButton">Обновить кеш</button>
-                <button id="removeCacheButton">Очистить кеш</button>
+            <div class="buttonContainer" id="tollEditText">
+                <button disabled>⊨ Текст слева</button>
+                <button disabled>≡ Текст по центру</button>
+                <button disabled>⫤ Текст справа</button>
+                <button disabled>⫪ Подсказка</button>
             </div>
 
-            <div id="toolsTestBlock">
+            <div class="buttonContainer" id="toolsEditElement">
+                <button id="cellAdLButton">←▢ Ячейка слева</button>
+                <button id="cellAddRButton">▢→ Ячейка справа</button>
+                <button id="cellDelButton">⨉▢ Удалить ячейку</button>
+
+                <button disabled>←◫ Столбец справа</button>
+                <button disabled>◫→ Столбец слева</button>
+                <button disabled>⨉◫ Удалить столбец</button>
+
+                <button disabled>↑⊟ Строка сверху</button>
+                <button disabled>↓⊟ Строка снизу</button>
+                <button disabled>⨉⊟ Удалить строку</button>
+
+                <button id="tableAddUButton" disabled>↑⊞ Таблица сверху</button>
+                <button id="tableAddDButton">↓⊞ Таблица снизу</button>
+                <button id="cellDelButton" disabled>⨉⊞ Удалить таблицу</button>
+            </div>
+
+            <div class="buttonContainer" id="toolsTestBlock">
                 <button id="testButton">Тест</button>
             </div>
         </div>

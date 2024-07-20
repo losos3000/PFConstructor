@@ -1,13 +1,23 @@
-#pageBlock > table {
-    width: 100%;
-}
-
-#pageBlock > td {
-    border: 1px solid black;
-}
-
+/* PRINT FORM */
 #pageBlock {
     width: 700px;
     padding: 25px;
 }
+
+table {
+    width: 100%;
+}
+td {
+    border: 1px solid black;
+}
+
+.noneLine {
+    border-width: 0px;
+}
+
+.underLine {
+    border-width: 0px;
+    border-bottom: 1px;
+}
+/* ========== */
 

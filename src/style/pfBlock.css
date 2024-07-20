@@ -1,0 +1,21 @@
+/* PAGE BLOCK */
+#pfBlock {
+    background-color: var(--bg-color);
+    
+    width: 60%;
+    padding: 25px 0px;
+
+    display: flex;
+    justify-content: center;
+
+    overflow-y: scroll;
+}
+
+#pageBlockContainer {
+    background-color: white;
+
+    width: 700px;
+    min-height: 100%;
+    height:min-content;
+}
+/* ========== */

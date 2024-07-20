@@ -1,9 +1,11 @@
+console.log('main.js start');
+
 //JS СКРИПТЫ ДЛЯ ИМПОРТА
 const jsModules = [
     'tools',
-    'events',
     'editForm',
-    // 'test',
+    'ui',
+    'events',
 ];
 //==========
 
@@ -46,14 +48,14 @@ const importJSModulesPromise = new Promise((resolve, reject) => {
             script.setAttribute('defer', '');
     
             head.append(script);
-            resolve();
+            resolve(); 
         });
         importPromise.then(
             ()=>{
                 log(`Module ${element}.js imported`);
             },
             ()=>{
-                log(`Module ${element}.js not imported`, 'ERROR');
+                err(`Module ${element}.js not imported`);
             });
     });
     resolve();
@@ -64,6 +66,7 @@ importJSModulesPromise.then(
         log('All modules imported');
     },
     () => {
-        log('Not all modules imported', 'WARN');
+        wrn('Not all modules imported');
     });
 //==========
+log('main.js end');
