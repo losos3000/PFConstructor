@@ -104,6 +104,7 @@ const delRow = () => {
 
 //Добавление таблицы
 const addTable = (index, text, type) => {
+    dbg(index);
     index = index??printForm.body.children.length - 1;
     text = text??printForm.body.childElementCount;
     type = type??'table'; //table, text

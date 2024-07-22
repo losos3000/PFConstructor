@@ -4,39 +4,12 @@ dbg('tools.js start');
 class PrintForm {
     constructor() {
         //Инициализация свойств
-        this.style = document.createElement('style');
-        this.body = document.createElement('div');
         this.name = 'printForm';
-
-        //Инициализация стилей
-        this.style.innerHTML = (
-            `\n` +
-            `   table {\n` +
-            `       width: 100%;\n` +
-            `       border-collapse: collapse;\n` +
-            `       table-layout: fixed;\n` +
-            `   }\n`+
-            `\n`+
-            `   td {\n` +
-            `       border: 1px solid black;\n` +
-            `       padding: 5px;\n` +
-            // `       column-span: auto;\n` +
-            `   }\n` +
-            `\n` +
-            `   #pageBlock {\n` +
-            `       box-sizing: border-box;\n` +
-            `       width: 700px;\n` +
-            `       padding: 25px;\n` +
-            `   }\n` +
-            `\n` +
-            `   .tableText td {\n` +
-            `       border: 0px;\n` +
-            `   }\n`
-        );
+        this.bodyUI = document.createElement('div');
+        this.body = document.createElement('div');
 
         //Инициализация формы
-        this.body.setAttribute('id', 'pageBlock');
-        this.body.innerHTML = '\n   ';
+        this.body.id = this.bodyUI.id = 'pageBlock';
     }
 };
 
@@ -123,6 +96,25 @@ class EditTools {
         // this.addTextButton = document.createElement('button');
         // this.addTextButton.classList.id = 'addTextButton';
         //==========
+
+
+
+        //UI элементы
+        //Кнопка добавления таблицы
+        this.tableAddDButtonUI = document.createElement('button');
+        this.tableAddDButtonUI.classList.add('UI');
+        this.tableAddDButtonUI.innerText = '+⊞ Таблица';
+        this.tableAddDButtonUI.setAttribute('onclick', 'addTable(event.target.parentElement.getAttribute("ui-index"))');
+
+        //Контейнер кнопок
+        this.UIContainer = document.createElement('div');
+        this.UIContainer.classList.add('buttonContainer');
+        this.UIContainer.classList.add('UI');
+        this.UIContainer.classList.add('UIAddBlock');
+        this.UIContainer.setAttribute('ui-index', '-1');
+        
+        this.UIContainer.append(this.tableAddDButtonUI);
+        //==========
         
         
         //ПРОЧЕЕ
@@ -135,17 +127,6 @@ class EditTools {
     renderTools() {
 
     }
-
-
-    //Получение кода печатной формы
-    getPrintFormCode () {
-        let div = document.createElement('div');
-
-        div.append(printForm.style);
-        div.append('\n\n');
-        div.append(printForm.body)
-        return (div.innerHTML);
-    }
 };
 
 
@@ -153,105 +134,49 @@ class EditTools {
 //Класс системных инструментов
 class SystemTools {
     constructor() {
-        //
-        this.pfBlock = document.getElementById('pfBlock');
-
         //Системный контейнер печаной формы
         this.pageBlockContainer = document.getElementById('pageBlockContainer');
-
-        //
-        this.pageBlock = document.getElementById('pageBlock');
-    }
-
-    
-    //
-    setCache() {
-        //Сделать так, что запись в кеш чистилась от hover и active
-
-        // window.localStorage.setItem('printFormStyle', String(printForm.style.innerHTML));
-        window.localStorage.setItem('printFormBody', printForm.body.innerHTML);
     }
 
 
-    //
-    getChache() {
-        // let pfsCache = window.localStorage.getItem('printFormStyle');
-        let pfbCache = window.localStorage.getItem('printFormBody');
-
-        // printForm.style.innerText = pfsCache??printForm.style;
-        printForm.body.innerHTML = pfbCache??printForm.body;
-    }
-
-    
-
-    //
-    removeCahce() {
-        window.localStorage.clear();
-        this.renderForm(false);
-    }
-
-
-    //
-    renderWorkspace() {
-        this.renderForm();
-        editTools.renderTools();
+    //Сохранение 
+    setChace() {
+        window.localStorage.setItem('printForm', printForm.body.outerHTML);
     }
     
 
-    //Обновление блока страницы
-    renderForm(doSetCache) {
-        doSetCache = doSetCache??true;
+    //Обновление блока конструктора
+    renderForm() {
+        let pageBlock = this.pageBlockContainer.querySelector('#pageBlock');
 
-        this.resetPrintForm();
+        pageBlock = pageBlock??document.createElement('div');
+        pageBlock.id = 'pageBlock';
 
-        if (doSetCache){
-            this.setCache();
-        }
+        pageBlock.querySelectorAll('UI').forEach((el) => {
+                el.remove();
+        });
+
+        printForm.bodyUI.innerHTML = pageBlock.innerHTML;
+
+        pageBlock.querySelectorAll('.is_active').forEach((el) => {
+            el.classList.remove('is_active');
+        });
+
+        printForm.body.innerHTML = pageBlock.innerHTML;
+        // this.setChace();
 
         if (editTools.showUICheckbox.checked) {
-            this.renderFormUI();
+            this.renderUI();
         } else {
-            this.pageBlockContainer.innerHTML = editTools.getPrintFormCode();
+            this.pageBlockContainer.innerHTML = printForm.body.outerHTML;
         }
     };
 
     
-    //
-    renderFormUI() {
-        let div = document.createElement('div');
-        div.classList.add('UI');
-        div.classList.add('UIAddBlock');
-        div.setAttribute('ui-index', '-1');
-
-        let btnTable = document.createElement('button');
-        btnTable.classList.add('UI');
-        btnTable.innerText = '+⊞ Таблица';
-        btnTable.setAttribute('onclick', 'addTable(event.target.parentElement.getAttribute("ui-index"))');
-        
-
-
-        
-
-        // let buttonBr = document.createElement('button');
-        // buttonBr.classList.add('UI');
-        // buttonBr.classList.add('UIAddBr');
-        // buttonBr.disabled = true;
-        // buttonBr.innerText = '+↲ Отступ';
-        // buttonBr.setAttribute('onclick', 'UIAddText(event.target.parentElement.getAttribute("ui-index"))');
-
-
-        div.append(btnTable.cloneNode(true));
-        // div.append(editTools.addTextButton.cloneNode(true));
-        // div.append(buttonBr.cloneNode(true));
-
-
-        let printFormUI = document.createElement('div');
-        printFormUI.setAttribute('id', 'pageBlock');
-        
-
+    //Рендер интерфейса
+    renderUI() {
         let style = document.createElement('style');
-        style.innerHTML = printForm.style.innerHTML;
-        style.innerHTML += (
+        style.innerHTML = (
 `       table {
             border: 1px dashed black;
             padding: 10px;
@@ -261,78 +186,59 @@ class SystemTools {
         .tableText {
             border-style: dashed;
         }`);
-        printFormUI.appendChild(style.cloneNode(true));
 
+        let childrenCount = printForm.bodyUI.children.length;
 
+        printForm.bodyUI.prepend(editTools.UIContainer.cloneNode(true));
 
-        printFormUI.appendChild(div.cloneNode(true));
+        for (let i = 0; i < childrenCount; i++) {
+            let uic = editTools.UIContainer.cloneNode(true);
+            uic.setAttribute('ui-index',`${i}`);
 
-        for (let i = 0; i < printForm.body.children.length; i++) {
-            let pfChildren = printForm.body.children[i].cloneNode(true);
-            
-            printFormUI.appendChild(pfChildren);
-            div.setAttribute('ui-index', `${i}`);
-            printFormUI.appendChild(div.cloneNode(true));
+            printForm.bodyUI.children[i].after(uic);
         }
 
-        this.pageBlockContainer.innerHTML = printFormUI.outerHTML;
+        this.pageBlockContainer.innerHTML = printForm.bodyUI.outerHTML;
+        this.pageBlockContainer.prepend(style);
     }
 
 
-    //Парсинг printForm.css в текст
-    parsePrintFormStyle() {
-        let styleSheetFile = document.styleSheets[2].cssRules;
-        let styleSheetText = `<style>`;
+    // //Парсинг printForm.css в текст
+    // parsePrintFormStyle() {
+    //     let styleSheetFile = document.styleSheets[2].cssRules;
+    //     let styleSheetText = `<style>`;
 
-        for (let i = 0; i < styleSheetFile.length; i++)
-            styleSheetText += `\n${styleSheetFile[i].cssText}`;
-        styleSheetText += `\n</style>\n`;
+    //     for (let i = 0; i < styleSheetFile.length; i++)
+    //         styleSheetText += `\n${styleSheetFile[i].cssText}`;
+    //     styleSheetText += `\n</style>\n`;
         
-        return styleSheetText;
-    }
+    //     return styleSheetText;
+    // }
 
 
-    //Парсинг содержимого загруженного файла
-    parsePFFileBody(pfFile) {
-        let div = document.createElement('div');
-        div.innerHTML = pfFile;
+    // //Парсинг содержимого загруженного файла
+    // parsePFFileBody(pfFile) {
+    //     let div = document.createElement('div');
+    //     div.innerHTML = pfFile;
 
-        let divStyle = div.querySelector('style');
-        let divPageBlock = div.querySelector('#pageBlock');
+    //     let divStyle = div.querySelector('style');
+    //     let divPageBlock = div.querySelector('#pageBlock');
 
-        divStyle.remove();
+    //     divStyle.remove();
         
-        for (let i = 0; i < div.childNodes.length; i++) {
-            if (div.childNodes[i].nodeName == '#comment') {
-                div.childNodes[i].remove();
-            }
-        }
+    //     for (let i = 0; i < div.childNodes.length; i++) {
+    //         if (div.childNodes[i].nodeName == '#comment') {
+    //             div.childNodes[i].remove();
+    //         }
+    //     }
 
-        if (divPageBlock){
-            divPageBlock.outerHTML = divPageBlock.innerHTML;
-        }
+    //     if (divPageBlock){
+    //         divPageBlock.outerHTML = divPageBlock.innerHTML;
+    //     }
         
-        return (div.innerHTML);
-    }
+    //     return (div.innerHTML);
+    // }
 
-
-    //
-    resetPrintForm() {
-        if (editTools.showUICheckbox.checked && this.pageBlockContainer.querySelector('#pageBlock')){
-            let pb = this.pageBlockContainer.querySelector('#pageBlock').cloneNode(true);
-
-            if (pb)
-                pb.querySelectorAll('style').forEach((el) => {
-                    el.remove();
-                });
-
-            pb.querySelectorAll('.UI').forEach((el) => {
-                el.remove();
-            });
-
-            printForm.body.innerHTML = pb.innerHTML;
-        }
-    }
 };
 //==========
 

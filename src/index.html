@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./style/main.css">
-    <link rel="stylesheet" href="./style/pfBlock.css">
+    <link rel="stylesheet" href="./style/constructor.css">
     <link rel="stylesheet" href="./style/tools.css">
     <link rel="stylesheet" href="./style/ui.css">
     
@@ -17,61 +17,69 @@
 
 <body>
     <div id="main">
-        <div id="pfBlock">
-            <link rel="stylesheet" href="./style/printForm.css">
-            <div id="pageBlockContainer">
-                
-            </div>
+        <div id="header">
+
         </div>
-            
-        <div id="toolsBlock">
-            <div class="buttonContainer" id="toolsFile">
-                <button id="uploadFileButton">⩠ Загрузить файл</button>
-                <button id="saveFileButton">⩣ Сохранить файл</button>
+
+        <div id="workSpace">
+            <div id="constructorBlock">
+                <link rel="stylesheet" href="./style/printForm.css">
+                <div id="pageBlockContainer">
+                    <div id="pageBlock">
+                        
+                    </div>
+                </div>
             </div>
-
-            <div class="buttonContainer" id="toolsSystem">
-                <button id="setCacheButton" disabled>⩣ Загрузить кеш</button>
-                <button id="setCacheButton">↻ Обновить кеш</button>
-                <button id="removeCacheButton">⨉ Очистить кеш</button>
-            </div>
-
-
-            <div class="buttonContainer" id="toolsEditForm">
-                <input type="checkbox" id="showUICheckbox" checked>
-                <label for="showUICheckbox">UI элементы</label>
-
-                <button id="renderFormButton">↻ Обновить форму</button>
-                <button id="clearFormButton">⨉ Очистить форму</button>
-            </div>
-
-            <div class="buttonContainer" id="tollEditText">
-                <button disabled>⊨ Текст слева</button>
-                <button disabled>≡ Текст по центру</button>
-                <button disabled>⫤ Текст справа</button>
-                <button disabled>⫪ Подсказка</button>
-            </div>
-
-            <div class="buttonContainer" id="toolsEditElement">
-                <button id="cellAdLButton">←▢ Ячейка слева</button>
-                <button id="cellAddRButton">▢→ Ячейка справа</button>
-                <button id="cellDelButton">⨉▢ Удалить ячейку</button>
-
-                <button disabled>←◫ Столбец справа</button>
-                <button disabled>◫→ Столбец слева</button>
-                <button disabled>⨉◫ Удалить столбец</button>
-
-                <button disabled>↑⊟ Строка сверху</button>
-                <button disabled>↓⊟ Строка снизу</button>
-                <button disabled>⨉⊟ Удалить строку</button>
-
-                <button id="tableAddUButton" disabled>↑⊞ Таблица сверху</button>
-                <button id="tableAddDButton">↓⊞ Таблица снизу</button>
-                <button id="cellDelButton" disabled>⨉⊞ Удалить таблицу</button>
-            </div>
-
-            <div class="buttonContainer" id="toolsTestBlock">
-                <button id="testButton">Тест</button>
+                
+            <div id="toolsBlock">
+                <div class="buttonContainer" id="toolsFile">
+                    <button id="uploadFileButton" disabled>⩠ Загрузить файл</button>
+                    <button id="saveFileButton" disabled>⩣ Сохранить файл</button>
+                </div>
+    
+                <div class="buttonContainer" id="toolsSystem">
+                    <button id="setCacheButton" disabled>⩣ Загрузить кеш</button>
+                    <button id="setCacheButton" disabled>↻ Обновить кеш</button>
+                    <button id="removeCacheButton" disabled>⨉ Очистить кеш</button>
+                </div>
+    
+    
+                <div class="buttonContainer" id="toolsEditForm">
+                    <input type="checkbox" id="showUICheckbox" checked disabled>
+                    <label for="showUICheckbox">UI элементы</label>
+    
+                    <button id="renderFormButton" disabled>↻ Обновить форму</button>
+                    <button id="clearFormButton" disabled>⨉ Очистить форму</button>
+                </div>
+    
+                <div class="buttonContainer" id="tollEditText">
+                    <button disabled>⊨ Текст слева</button>
+                    <button disabled>≡ Текст по центру</button>
+                    <button disabled>⫤ Текст справа</button>
+                    <button disabled>⫪ Подсказка</button>
+                </div>
+    
+                <div class="buttonContainer" id="toolsEditElement">
+                    <button id="cellAdLButton" disabled>←▢ Ячейка слева</button>
+                    <button id="cellAddRButton" disabled>▢→ Ячейка справа</button>
+                    <button id="cellDelButton" disabled>⨉▢ Удалить ячейку</button>
+    
+                    <button disabled>←◫ Столбец справа</button>
+                    <button disabled>◫→ Столбец слева</button>
+                    <button disabled>⨉◫ Удалить столбец</button>
+    
+                    <button disabled>↑⊟ Строка сверху</button>
+                    <button disabled>↓⊟ Строка снизу</button>
+                    <button disabled>⨉⊟ Удалить строку</button>
+    
+                    <button id="tableAddUButton" disabled>↑⊞ Таблица сверху</button>
+                    <button id="tableAddDButton" disabled>↓⊞ Таблица снизу</button>
+                    <button id="cellDelButton" disabled>⨉⊞ Удалить таблицу</button>
+                </div>
+    
+                <div class="buttonContainer" id="toolsTestBlock">
+                    <button id="testButton">Тест</button>
+                </div>
             </div>
         </div>
     </div>
