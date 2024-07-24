@@ -1,6 +1,6 @@
 /* TOOLS BLOCK */
 #toolsBlock {
-    width: 40%;
+    width: var(--tools-block-width);
 
     padding: 10px;
     gap: 20px;

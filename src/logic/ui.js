@@ -2,7 +2,8 @@ dbg('ui.js start');
 //
 //
 const setActive = (event) => {
-    if (!event.target.classList.contains('UI')) {
+    if (!event.target.classList.contains('UI')
+        && !editTools.showUICheckbox.checked) {
         if (event.target.id == ('constructorBlock')
             && event.target.id == ('pageBlockContainer')
             && event.target.id == ('pageBlock')
@@ -29,11 +30,13 @@ const setActive = (event) => {
 
 //
 const setHover = (event) => {
-    if (event.target.id != ('pageBlockContainer')
-        && event.target.id != ('pageBlock')
-        && !event.target.classList.contains('UI')
-    ) {
-        event.target.classList.add('is_hover')
+    if (!editTools.showUICheckbox.checked) {
+        if (event.target.id != ('pageBlockContainer')
+            && event.target.id != ('pageBlock')
+            && !event.target.classList.contains('UI')
+        ) {
+            event.target.classList.add('is_hover')
+        }
     }
 };
 

@@ -38,25 +38,35 @@
                 </div>
     
                 <div class="buttonContainer" id="toolsSystem">
-                    <button id="setCacheButton" disabled>⩣ Загрузить кеш</button>
-                    <button id="setCacheButton" disabled>↻ Обновить кеш</button>
-                    <button id="removeCacheButton" disabled>⨉ Очистить кеш</button>
+                    <button id="getCacheButton">⩣ Загрузить кеш</button>
+                    <button id="setCacheButton">↻ Обновить кеш</button>
+                    <button id="removeCacheButton">⨉ Очистить кеш</button>
                 </div>
     
     
                 <div class="buttonContainer" id="toolsEditForm">
-                    <input type="checkbox" id="showUICheckbox" checked disabled>
-                    <label for="showUICheckbox">UI элементы</label>
-    
+                    <div class="checkbox">
+                        <input type="checkbox" id="showUICheckbox">
+                        <label for="showUICheckbox">Просмотр формы</label>
+                    </div>
                     <button id="renderFormButton" disabled>↻ Обновить форму</button>
                     <button id="clearFormButton" disabled>⨉ Очистить форму</button>
                 </div>
     
                 <div class="buttonContainer" id="tollEditText">
+                    <button disabled>Заголовок</button>
+                    <button disabled>Абзац</button>
+                    <button disabled>⫪ Подпись</button>
+
+                    <button disabled><b>B</b> Жирный</button>
+                    <button disabled><u>U</u> Подчеркнутый</button>
+                    <button disabled><i>I</i> Курсив</button>
+
                     <button disabled>⊨ Текст слева</button>
                     <button disabled>≡ Текст по центру</button>
                     <button disabled>⫤ Текст справа</button>
-                    <button disabled>⫪ Подсказка</button>
+
+                    
                 </div>
     
                 <div class="buttonContainer" id="toolsEditElement">
@@ -72,6 +82,9 @@
                     <button disabled>↓⊟ Строка снизу</button>
                     <button disabled>⨉⊟ Удалить строку</button>
     
+                    <button id="tableAddUButton" disabled>↑⊞ Таблица сверху</button>
+                    <button id="tableAddDButton" disabled>↓⊞ Таблица снизу</button>
+                    <button id="cellDelButton" disabled>⨉⊞ Удалить таблицу</button>
                     <button id="tableAddUButton" disabled>↑⊞ Таблица сверху</button>
                     <button id="tableAddDButton" disabled>↓⊞ Таблица снизу</button>
                     <button id="cellDelButton" disabled>⨉⊞ Удалить таблицу</button>

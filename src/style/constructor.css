@@ -2,7 +2,7 @@
 #constructorBlock {
     background-color: var(--bg-color);
     
-    width: 60%;
+    width: var(--constructor-block-width);
     padding: 25px 0px;
 
     display: flex;
@@ -15,7 +15,9 @@
     background-color: white;
 
     width: 700px;
-    min-height: 100%;
     height:min-content;
+    min-height: 100%;
+    
+    border-radius: var(--main-radius);
 }
 /* ========== */

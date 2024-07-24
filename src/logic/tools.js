@@ -33,15 +33,6 @@ class EditTools {
 
 
 
-        //РАБОТА С КЕШОМ
-        //Кнопка обновления кеша
-        this.setCacheButton = document.querySelector('#setCacheButton');
-
-        //Кнопка удаления кеша
-        this.removeCacheButton = document.querySelector('#removeCacheButton');
-        //==========
-
-
         //РАБОТА С ФОРМОЙ
         //UI чекбокс
         this.showUICheckbox = document.querySelector('#showUICheckbox');
@@ -134,21 +125,49 @@ class EditTools {
 class SystemTools {
     constructor() {
         //
+        //
         this.constructorBlock = document.getElementById('constructorBlock');
 
         //Системный контейнер печаной формы
         this.pageBlockContainer = document.getElementById('pageBlockContainer');
+        //==========
+
+
+
+        //РАБОТА С КЕШЕМ
+        //Кнопка получения кеша
+        this.getCacheButton = document.querySelector('#getCacheButton');
+
+        //Кнопка обновления кеша
+        this.setCacheButton = document.querySelector('#setCacheButton');
+
+        //Кнопка удаления кеша
+        this.removeCacheButton = document.querySelector('#removeCacheButton');
+        //==========
     }
 
 
     //Сохранение 
-    setChace() {
-        window.localStorage.setItem('printForm', printForm.body.outerHTML);
+    setCache() {
+        window.localStorage.setItem('printForm', printForm.body.innerHTML);
     }
-    
 
-    //Обновление блока конструктора
-    renderForm() {
+
+    //
+    getCache() {
+        let pageBlock = this.pageBlockContainer.querySelector('#pageBlock');
+        pageBlock.innerHTML = window.localStorage.getItem('printForm');
+    }
+
+
+    //
+    removeCache() {
+        window.localStorage.removeItem('printForm');
+    }
+
+
+    //
+    getPFBody() {
         let pageBlock = this.pageBlockContainer.querySelector('#pageBlock');
 
         pageBlock = pageBlock??document.createElement('div');
@@ -157,18 +176,25 @@ class SystemTools {
         for (let el of pageBlock.querySelectorAll('.UIAddBlock')) {
             el.remove();
         }
-
+        
         printForm.bodyUI.innerHTML = pageBlock.innerHTML;
-        dbg(printForm.bodyUI);
-
+        
         pageBlock.querySelectorAll('.is_active').forEach((el) => {
             el.classList.remove('is_active');
         });
 
         printForm.body.innerHTML = pageBlock.innerHTML;
-        // this.setChace();
+    }
+    
 
-        if (editTools.showUICheckbox.checked) {
+    //Обновление блока конструктора
+    renderForm() {
+
+        this.getPFBody();
+
+        this.setCache();
+
+        if (!editTools.showUICheckbox.checked) {
             this.renderUI();
         } else {
             this.pageBlockContainer.innerHTML = printForm.body.outerHTML;

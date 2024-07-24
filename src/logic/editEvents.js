@@ -40,24 +40,6 @@ dbg('events.js start');
 // });
 
 
-// //Отображение UI элементов на форме
-// editTools.showUICheckbox.addEventListener('click', () => {
-//     systemTools.renderForm();
-// });
-
-
-// //Обновление кеша
-// editTools.setCacheButton.addEventListener('click', () => {
-//     systemTools.setCache();
-// });
-
-
-// //Удаление кеша
-// editTools.removeCacheButton.addEventListener('click', () => {
-//     systemTools.removeCahce();
-// });
-
-
 // //Добавлене таблицы снизу
 // editTools.tableAddDButton.addEventListener('click', (event) => {
 //     if (document.querySelector('.is_active')?.nodeName == 'TABLE') {
@@ -90,7 +72,7 @@ dbg('events.js start');
 
 //Тестовая кнопка
 editTools.testButton.addEventListener('click', () => {
-    systemTools.renderForm();
+    dbg(printForm.bodyUI);
 });
 
 dbg('events.js end');
