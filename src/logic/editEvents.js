@@ -1,12 +1,5 @@
 dbg('events.js start');
-//ОБРАБОТКА СОБЫТИЙ
-//рендер формы при загрузке страницы
-window.onload = () => {
-    // systemTools.getChache();
-    systemTools.renderForm();
-};
-
-
+//ОБРАБОТКА СОБЫТИЙ ИНСТРУМЕНТОВ РЕДАКТИРОВАНИЯ
 // //Кнопка загрузки файла
 // editTools.uploadFileButton.addEventListener('click', () => {
 //     editTools.input.click();
@@ -19,22 +12,7 @@ window.onload = () => {
 // });
 
 
-// //Обработка нажатия на элемент
-// systemTools.pfBlock.addEventListener('click', (event) => {
-//     setActive(event);
-// });
 
-
-// //Обработка наведения на элемент
-// systemTools.pageBlockContainer.addEventListener('mouseover', (event) => {
-//     setHover(event);
-// });
-
-
-// //Обработка уведения курсора с элемента
-// systemTools.pageBlockContainer.addEventListener('mouseout', (event) => {
-//     event.target.classList.remove('is_hover')
-// });
 
 
 // //Сохранение файла
@@ -112,10 +90,6 @@ window.onload = () => {
 
 //Тестовая кнопка
 editTools.testButton.addEventListener('click', () => {
-    let tmp = systemTools.pageBlockContainer.querySelector('#pageBlock');
-    let td = document.createElement('td');
-    td.innerText = 'hello';
-    tmp.append(td);
     systemTools.renderForm();
 });
 

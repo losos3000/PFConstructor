@@ -103,9 +103,8 @@ const delRow = () => {
 
 
 //Добавление таблицы
-const addTable = (index, text, type) => {
-    dbg(index);
-    index = index??printForm.body.children.length - 1;
+const addTable = (element, text, type) => {
+    element = element??systemTools.pageBlockContainer.querySelector('#pageBlock').lastChild;
     text = text??printForm.body.childElementCount;
     type = type??'table'; //table, text
 
@@ -131,11 +130,7 @@ const addTable = (index, text, type) => {
     tbody.append(tr);
     table.append(tbody);
 
-    if (index == -1){
-        printForm.body.prepend(table.cloneNode(true));
-    } else {
-        printForm.body.children[index].after(table.cloneNode(true));
-    }
+    element.after(table);
 
     systemTools.renderForm();
 };

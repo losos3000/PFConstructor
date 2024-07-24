@@ -104,14 +104,13 @@ class EditTools {
         this.tableAddDButtonUI = document.createElement('button');
         this.tableAddDButtonUI.classList.add('UI');
         this.tableAddDButtonUI.innerText = '+⊞ Таблица';
-        this.tableAddDButtonUI.setAttribute('onclick', 'addTable(event.target.parentElement.getAttribute("ui-index"))');
+        this.tableAddDButtonUI.setAttribute('onclick', 'addTable(event.target.parentElement)');
 
         //Контейнер кнопок
         this.UIContainer = document.createElement('div');
+        this.UIContainer.className = 'UIAddBlock';
         this.UIContainer.classList.add('buttonContainer');
         this.UIContainer.classList.add('UI');
-        this.UIContainer.classList.add('UIAddBlock');
-        this.UIContainer.setAttribute('ui-index', '-1');
         
         this.UIContainer.append(this.tableAddDButtonUI);
         //==========
@@ -134,6 +133,9 @@ class EditTools {
 //Класс системных инструментов
 class SystemTools {
     constructor() {
+        //
+        this.constructorBlock = document.getElementById('constructorBlock');
+
         //Системный контейнер печаной формы
         this.pageBlockContainer = document.getElementById('pageBlockContainer');
     }
@@ -152,11 +154,12 @@ class SystemTools {
         pageBlock = pageBlock??document.createElement('div');
         pageBlock.id = 'pageBlock';
 
-        pageBlock.querySelectorAll('UI').forEach((el) => {
-                el.remove();
-        });
+        for (let el of pageBlock.querySelectorAll('.UIAddBlock')) {
+            el.remove();
+        }
 
         printForm.bodyUI.innerHTML = pageBlock.innerHTML;
+        dbg(printForm.bodyUI);
 
         pageBlock.querySelectorAll('.is_active').forEach((el) => {
             el.classList.remove('is_active');
@@ -175,30 +178,23 @@ class SystemTools {
     
     //Рендер интерфейса
     renderUI() {
+        let pageBlock = this.pageBlockContainer.querySelector('#pageBlock');
+        pageBlock.innerHTML = '';
+
         let style = document.createElement('style');
         style.innerHTML = (
 `       table {
             border: 1px dashed black;
             padding: 10px;
             border-collapse: separate;
-        }
-        
-        .tableText {
-            border-style: dashed;
         }`);
 
-        let childrenCount = printForm.bodyUI.children.length;
-
-        printForm.bodyUI.prepend(editTools.UIContainer.cloneNode(true));
-
-        for (let i = 0; i < childrenCount; i++) {
-            let uic = editTools.UIContainer.cloneNode(true);
-            uic.setAttribute('ui-index',`${i}`);
-
-            printForm.bodyUI.children[i].after(uic);
+        pageBlock.append(editTools.UIContainer.cloneNode(true));
+        for (let el of printForm.bodyUI.children) {
+            pageBlock.append(el.cloneNode(true));
+            pageBlock.append(editTools.UIContainer.cloneNode(true));
         }
 
-        this.pageBlockContainer.innerHTML = printForm.bodyUI.outerHTML;
         this.pageBlockContainer.prepend(style);
     }
 

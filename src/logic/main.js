@@ -5,7 +5,8 @@ const jsModules = [
     'tools',
     'editForm',
     'ui',
-    'events',
+    'systemEvents',
+    'editEvents',
 ];
 //==========
 
