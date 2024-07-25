@@ -1,5 +1,6 @@
 dbg('events.js start');
 //ОБРАБОТКА СОБЫТИЙ ИНСТРУМЕНТОВ РЕДАКТИРОВАНИЯ
+//
 // //Кнопка загрузки файла
 // editTools.uploadFileButton.addEventListener('click', () => {
 //     editTools.input.click();
@@ -32,47 +33,55 @@ dbg('events.js start');
 //     printForm.body.innerHTML = '';
 //     systemTools.renderForm();
 // });
+//==========
 
 
-// //Удаление элемента
-// editTools.cellDelButton.addEventListener('click', () => {
-//     delCell();
-// });
+//СОБЫТИЯ ИНСТРУМЕНТОВ РАБОТЫ С ТАБЛИЦЕЙ
+//Добавление ячейки слева
+editTools.cellAdLButton.addEventListener('click', () => {
+    addCell(false);
+});
 
 
-// //Добавлене таблицы снизу
-// editTools.tableAddDButton.addEventListener('click', (event) => {
-//     if (document.querySelector('.is_active')?.nodeName == 'TABLE') {
-//         dbg(event.target.nextSibling);
-//         addTable(event.target.nextElementSibling.getAttribute('ui-index'));
-//     } else {
-//         addTable();
-//     }
-// });
+//Добавление ячейки справа
+editTools.cellAddRButton.addEventListener('click', () => {
+    addCell();
+});
+
+//Удаление ячейки
+editTools.cellDelButton.addEventListener('click', () => {
+    delCell();
+});
 
 
-// //
-// editTools.cellAdLButton.addEventListener('click', () => {
-//     addCell(false);
-// });
+//Добавление строки сверху
+editTools.rowAddUButton.addEventListener('click', () => {
+    addRow(false);
+});
 
 
-// //
-// editTools.cellAddRButton.addEventListener('click', () => {
-//     addCell();
-// });
+//Удаление строки
+editTools.rowDelButton.addEventListener('click', () => {
+    delRow();
+});
 
-// //
-// // editTools.addTextButton.addEventListener('click', (event) => {
-// //     addText(event.target.parentElement.getAttribute("ui-index"));
-// // });
+
+//Удаление таблицы
+editTools.tableDelButton.addEventListener('click', () => {
+    delTable();
+});
+//==========
 //==========
 
 
 
 //Тестовая кнопка
 editTools.testButton.addEventListener('click', () => {
-    dbg(printForm.bodyUI);
+    let ae = document.querySelector('.is_active');
+
+    if (ae.nodeName == 'TABLE') {
+        dbg(ae.tBodies[0].rows);
+    }
 });
 
 dbg('events.js end');

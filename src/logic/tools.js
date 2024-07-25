@@ -66,19 +66,19 @@ class EditTools {
 
 
         //Кнопка добавления строки сверху
-
+        this.rowAddUButton = document.querySelector('#rowAddUButton');
 
         //Кнопка добавления строки снизу
-
+        this.rowAddDButton = document.querySelector('#rowAddDButton');
 
         //Кнопка удаления строки
-
+        this.rowDelButton = document.querySelector('#rowDelButton');
 
         //Кнопка добавления таблицы (по умолчанию с низу)
         this.tableAddDButton = document.querySelector('#tableAddDButton');
 
         //Кнопка удаления таблицы
-
+        this.tableDelButton = document.querySelector('#tableDelButton');
         //==========
         
         
