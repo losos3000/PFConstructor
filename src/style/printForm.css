@@ -3,6 +3,9 @@
     width: 700px;
     padding: 25px;
     box-sizing: border-box;
+
+    font-size: 14px;
+    line-height: 16px;
 }
 
 table {
@@ -10,11 +13,13 @@ table {
     border-collapse: collapse;
     table-layout: fixed;
 }
+
 td {
+    padding: 5px;
+
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    padding: 5px;
 }
 
 .noneLine {

@@ -48,7 +48,7 @@ class EditTools {
 
         //РАБОТА С ТАБЛИЦЕЙ
         //Кнопка добавления ячейки слева
-        this.cellAdLButton = document.querySelector('#cellAdLButton');
+        this.cellAddLButton = document.querySelector('#cellAddLButton');
 
         //Кнопка добавления ячейки справа
         this.cellAddRButton = document.querySelector('#cellAddRButton');
@@ -57,13 +57,13 @@ class EditTools {
         this.cellDelButton = document.querySelector('#cellDelButton');
 
         //Кнопка добавления столбца слева
-
+        this.colAddLButton = document.querySelector('#colAddLButton');
 
         //Кнопка добавления столбца справа
-
+        this.colAddRButton = document.querySelector('#colAddRButton');
 
         //Кнопка удаления столбца
-
+        this.colDelButton = document.querySelector('#colDelButton');
 
         //Кнопка добавления строки сверху
         this.rowAddUButton = document.querySelector('#rowAddUButton');
@@ -74,7 +74,10 @@ class EditTools {
         //Кнопка удаления строки
         this.rowDelButton = document.querySelector('#rowDelButton');
 
-        //Кнопка добавления таблицы (по умолчанию с низу)
+        //Кнопка добавления таблицы сверху
+        this.tableAddUButton = document.querySelector('#tableAddUButton');
+
+        //Кнопка добавления таблицы снизу
         this.tableAddDButton = document.querySelector('#tableAddDButton');
 
         //Кнопка удаления таблицы
@@ -95,7 +98,7 @@ class EditTools {
         this.tableAddDButtonUI = document.createElement('button');
         this.tableAddDButtonUI.classList.add('UI');
         this.tableAddDButtonUI.innerText = '+⊞ Таблица';
-        this.tableAddDButtonUI.setAttribute('onclick', 'addTable(event.target.parentElement)');
+        this.tableAddDButtonUI.setAttribute('onclick', 'addTable(true, event.target.parentElement)');
 
         //Контейнер кнопок
         this.UIContainer = document.createElement('div');
@@ -108,6 +111,9 @@ class EditTools {
         
         
         //ПРОЧЕЕ
+        //Стандартная ячейка
+        this.TD = document.createElement('td');
+        this.TD.innerText = '1';
         //Тестовая кнопка
         this.testButton = document.querySelector('#testButton');
     }
@@ -172,6 +178,10 @@ class SystemTools {
 
         pageBlock = pageBlock??document.createElement('div');
         pageBlock.id = 'pageBlock';
+
+        for (let el of this.pageBlockContainer.querySelectorAll('style')) {
+            el.remove();
+        }
 
         for (let el of pageBlock.querySelectorAll('.UIAddBlock')) {
             el.remove();

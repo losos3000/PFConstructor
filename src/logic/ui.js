@@ -1,6 +1,26 @@
 dbg('ui.js start');
 //
 //
+const currentObject = (element)  => {
+    switch (element.nodeName) {
+        case 'TABLE':
+            return element;
+            break;
+        case 'TBODY':
+            return element.parentElement;
+            break;
+        case 'TR':
+            return element.parentElement.parentElement;
+            break;
+        case 'TD':
+            return element;
+            break;
+        default:
+            break;
+    }
+};
+
+//
 const setActive = (event) => {
     if (!event.target.classList.contains('UI')
         && !editTools.showUICheckbox.checked) {
@@ -20,8 +40,10 @@ const setActive = (event) => {
                 systemTools.pageBlockContainer.querySelectorAll('.is_active').forEach((el) => {
                     el.classList.remove('is_active');
                 });
+
+                let element = currentObject(event.target);
     
-                event.target.classList.add('is_active');
+                element.classList.add('is_active');
             }    
         }
     }
@@ -35,7 +57,8 @@ const setHover = (event) => {
             && event.target.id != ('pageBlock')
             && !event.target.classList.contains('UI')
         ) {
-            event.target.classList.add('is_hover')
+            let element = currentObject(event.target);
+            element.classList.add('is_hover')
         }
     }
 };

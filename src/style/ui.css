@@ -32,6 +32,15 @@
     background-color: var(--el-active-color);
 }
 
+table:hover {
+    /* cursor: pointer; */
+    cursor: cell;
+}
+
+td:hover {
+    cursor: cell;
+}
+
 .is_hover,
 .is_active {
     border-color: var(--main-color);

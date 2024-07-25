@@ -38,7 +38,7 @@ dbg('events.js start');
 
 //СОБЫТИЯ ИНСТРУМЕНТОВ РАБОТЫ С ТАБЛИЦЕЙ
 //Добавление ячейки слева
-editTools.cellAdLButton.addEventListener('click', () => {
+editTools.cellAddLButton.addEventListener('click', () => {
     addCell(false);
 });
 
@@ -48,11 +48,29 @@ editTools.cellAddRButton.addEventListener('click', () => {
     addCell();
 });
 
+
 //Удаление ячейки
 editTools.cellDelButton.addEventListener('click', () => {
     delCell();
 });
 
+
+//Добавление столбца слева
+editTools.colAddLButton.addEventListener('click', () => {
+    addCol(false);
+});
+
+
+//Добавление столбца справа
+editTools.colAddRButton.addEventListener('click', () => {
+    addCol();
+});
+
+
+//Удаление столбца
+editTools.colDelButton.addEventListener('click', () => {
+    delCol();
+});
 
 //Добавление строки сверху
 editTools.rowAddUButton.addEventListener('click', () => {
@@ -60,9 +78,27 @@ editTools.rowAddUButton.addEventListener('click', () => {
 });
 
 
+//Добавление строки снизу
+editTools.rowAddDButton.addEventListener('click', () => {
+    addRow();
+});
+
+
 //Удаление строки
 editTools.rowDelButton.addEventListener('click', () => {
     delRow();
+});
+
+
+//Добавление таблицы сверху
+editTools.tableAddUButton.addEventListener('click', () => {
+    addTable(false);
+});
+
+
+//Добавление таблицы снизу
+editTools.tableAddDButton.addEventListener('click', () => {
+    addTable();
 });
 
 
@@ -79,8 +115,8 @@ editTools.tableDelButton.addEventListener('click', () => {
 editTools.testButton.addEventListener('click', () => {
     let ae = document.querySelector('.is_active');
 
-    if (ae.nodeName == 'TABLE') {
-        dbg(ae.tBodies[0].rows);
+    if (ae.nodeName == 'TD') {
+        dbg(ae.cellIndex);
     }
 });
 
