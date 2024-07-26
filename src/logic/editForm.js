@@ -151,6 +151,9 @@ const addRow = (down) => {
             }
 
             if (down) {
+                activeRow = activeSection.rows[activeRowIndex + activeElement.rowSpan - 1];
+                activeRowIndex = activeRow.rowIndex;
+
                 for (let i = 0; i <= activeRowIndex; i++) {
                     for (cell of activeSection.rows[i].cells) {
                         if (i + cell.rowSpan - 1 > activeRowIndex) {
@@ -208,7 +211,27 @@ const addRow = (down) => {
 
 //Удаление строки
 const delRow = () => {
-    
+    let activeElement = systemTools.pageBlockContainer.querySelector('.is_active');
+
+    if (activeElement != null) {
+        if (activeElement.nodeName == 'TD') {
+            let activeRow = activeElement.parentElement;
+            let activeSection = activeRow.parentElement;
+            let activeRowIndex = activeRow.rowIndex;
+
+            for (let i = 0; i <= activeRowIndex; i++) {
+                for (cell of activeSection.rows[i].cells) {
+                    if (i + cell.rowSpan - 1 >= activeRowIndex) {
+                        cell.rowSpan --;
+                    }
+                }
+            }
+
+            activeRow.remove();
+
+            systemTools.renderForm(0);
+        }
+    }
 };
 
 
