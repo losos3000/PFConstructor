@@ -82,31 +82,59 @@ const addCol = (right) => {
 
     if(activeElement != null) {
         if (activeElement.nodeName == 'TD') {
-            let section = activeElement.parentElement.parentElement;
+            let activeRow = activeElement.parentElement;
+            let activeSection = activeRow.parentElement;
+            let activeCellIndex = activeElement.cellIndex;
             let cellCount = 0;
 
-            for (let i = 0; i <= activeElement.cellIndex; i++) {
-                cellCount += activeElement.colSpan;
-            }
+            if (right) {
+                activeCellIndex += activeElement.colSpan - 1;
 
-            rowIteration: for (let row of section.rows) {
-                let i = c = 0;
+                for (let i = 0; i < activeCellIndex; i++) {
+                    activeElement += activeRow.cells[i].colSpan - 1;
+                }
 
-                for (; c < cellCount; i++) {
-                    c += row.cells[i].colSpan;
-
-                    if (c > cellCount) {
-                        row.cells[i].colSpan++;
-                        continue rowIteration;
+                rowIteration: for (row of activeSection.rows) {
+                    let i_ = 0;
+                    
+                    for (let i = 0; i <= activeCellIndex; i += row.cells[i].colSpan) {
+                        if (i + row.cells[i].colSpan - 1 > activeCellIndex) {
+                            row.cells.colSpan++;
+                            continue rowIteration;
+                        }
+                        i_++;
                     }
-                }
-                
-                if (right) {
-                    row.cells[i-1].after(editTools.TD.cloneNode(true));
-                } else {
-                    row.cells[i-1].before(editTools.TD.cloneNode(true));
-                }
+
+                    row.cells[i_].after(editTools.TD.cloneNode(true));
+                } 
             }
+
+
+            // let section = activeElement.parentElement.parentElement;
+            // let cellCount = 0;
+
+            // for (let i = 0; i <= activeElement.cellIndex; i++) {
+            //     cellCount += activeElement.colSpan;
+            // }
+
+            // rowIteration: for (let row of section.rows) {
+            //     let i = c = 0;
+
+            //     for (; c < cellCount; i++) {
+            //         c += row.cells[i].colSpan;
+
+            //         if (c > cellCount) {
+            //             row.cells[i].colSpan++;
+            //             continue rowIteration;
+            //         }
+            //     }
+                
+            //     if (right) {
+            //         row.cells[i-1].after(editTools.TD.cloneNode(true));
+            //     } else {
+            //         row.cells[i-1].before(editTools.TD.cloneNode(true));
+            //     }
+            // }
 
             systemTools.renderForm();
 
