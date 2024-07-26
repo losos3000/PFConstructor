@@ -116,7 +116,10 @@ editTools.testButton.addEventListener('click', () => {
     let ae = document.querySelector('.is_active');
 
     if (ae.nodeName == 'TD') {
-        dbg(ae.cellIndex);
+        let rowIndex = ae.parentElement.rowIndex;
+
+        ae.parentElement.parentElement.insertRow(rowIndex + 1);
+        systemTools.renderForm();
     }
 });
 

@@ -142,55 +142,52 @@ const addRow = (down) => {
         if (activeElement.nodeName == 'TD') {
             let tr = document.createElement('tr');
             let activeRow = activeElement.parentElement;
-            let section = activeRow.parentElement;
-            let rowIndex = activeRow.rowIndex;
+            let activeSection = activeRow.parentElement;
+            let activeRowIndex = activeRow.rowIndex;
             let cellCount = 0;
 
-            for (let row of section.rows) {
-                if (row.cells.length > cellCount) {
-                    cellCount = row.cells.length;
-                }
+            for (cell of activeSection.rows[0].cells) {
+                cellCount += cell.colSpan;
             }
 
-            for (let i = 0; i <= rowIndex; i++) {
-                for (let cell of section.rows[i].cells) {
-                    if (down) {
-                        if (cell.rowSpan > rowIndex - i + 1) {
+            if (down) {
+                for (let i = 0; i <= activeRowIndex; i++) {
+                    for (cell of activeSection.rows[i].cells) {
+                        if (i + cell.rowSpan - 1 > activeRowIndex) {
                             cell.rowSpan++;
-                            cellCount--;
+                            cellCount -= cell.colSpan;
                         }
-                    } else {
-                        if (i != rowIndex) {
-                            if (cell.rowSpan >= rowIndex - i + 1) {
-                                cell.rowSpan++;
-                                cellCount--;
-                            }
-                        }
-                    }                    
+                    }
                 }
+
+                activeRow.after(tr);
+
+            } else {
+                for (let i = 0; i < activeRowIndex; i++) {
+                    for (cell of activeSection.rows[i].cells) {
+                        if (i + cell.rowSpan - 1 >= activeRowIndex) {
+                            cell.rowSpan++;
+                            cellCount -= cell.colSpan;
+                        }
+                    }
+                }
+
+                activeRow.before(tr);
             }
 
             for (let i = 0; i < cellCount; i++) {
                 tr.append(editTools.TD.cloneNode(true));
-            }
-
-            if (down) {
-                activeRow.after(tr.cloneNode(true));
-            } else {
-                activeRow.before(tr.cloneNode(true));
             }
             
             systemTools.renderForm(0);
 
         } else if (activeElement.nodeName == 'TABLE') {
             let tr = document.createElement('tr');
-            let section = activeElement.tBodies[0];
-            let cellCount = 1;
+            let activeSection = activeElement.tBodies[0];
+            let cellCount = 0;
 
-            for (let row of section.rows) {
-                if (row.cells.length > cellCount) {
-                    cellCount = row.cells.length;
-                }
+            for (cell of activeSection.rows[0].cells) {
+                cellCount += cell.colSpan;
             }
 
             for (let i = 0; i < cellCount; i++) {
@@ -198,9 +195,9 @@ const addRow = (down) => {
             }
 
             if (down) {
-                section.append(tr.cloneNode(true));
+                activeSection.append(tr.cloneNode(true));
             } else {
-                section.prepend(tr.cloneNode(true));
+                activeSection.prepend(tr.cloneNode(true));
             }
 
             systemTools.renderForm();
@@ -229,12 +226,25 @@ const addTable = (down, element) => {
 
         tr.append(td.cloneNode(true));
         tr.append(td.cloneNode(true));
+        tr.append(td.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
+        tbody.append(tr.cloneNode(true));
         tbody.append(tr.cloneNode(true));
         tbody.append(tr.cloneNode(true));
         table.append(tbody.cloneNode(true));
 
         table.tBodies[0].rows[1].cells[1].remove();
         table.tBodies[0].rows[0].cells[1].rowSpan = 2;
+        table.tBodies[0].rows[3].cells[1].remove();
+        // table.tBodies[0].rows[3].cells[0].colSpan = 2;
+        // table.tBodies[0].rows[4].cells[0].remove();
+        // table.tBodies[0].rows[4].cells[1].remove();
+        // table.tBodies[0].rows[3].cells[0].rowSpan = 2;
 
         if (down) {
             element.after(table.cloneNode(true));
